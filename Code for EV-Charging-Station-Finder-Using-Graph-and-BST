@@ -1,0 +1,150 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+
+struct Node {
+    int id;
+    string name;
+    Node *left, *right;
+};
+
+
+Node* insert(Node* root, int id, string name) {
+    if (root == NULL)
+        return new Node{id, name, NULL, NULL};
+
+    if (id < root->id)
+        root->left = insert(root->left, id, name);
+    else if (id > root->id)
+        root->right = insert(root->right, id, name);
+
+    return root;
+}
+
+
+Node* search(Node* root, int id) {
+    if (root == NULL || root->id == id)
+        return root;
+
+    if (id < root->id)
+        return search(root->left, id);
+
+    return search(root->right, id);
+}
+
+
+class Graph {
+    vector<int> adj[6];
+
+    string location[6] = {
+        "College", "Market", "Bus Stand",
+        "Hospital", "Mall", "Charging Station"
+    };
+
+public:
+
+    void addRoad(int u, int v) {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    
+    int findStation(int start) {
+        bool visited[6] = {false};
+        int parent[6];
+
+        for (int i = 0; i < 6; i++)
+            parent[i] = -1;
+
+        queue<int> q;
+        q.push(start);
+        visited[start] = true;
+
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+
+            if (u == 5) {
+                cout << "\nPath: ";
+
+                vector<int> path;
+
+                for (int i = u; i != -1; i = parent[i])
+                    path.push_back(i);
+
+                for (int i = path.size() - 1; i >= 0; i--) {
+                    cout << location[path[i]];
+
+                    if (i != 0)
+                        cout << " -> ";
+                }
+
+                return 5;
+            }
+
+            for (int v : adj[u]) {
+                if (!visited[v]) {
+                    visited[v] = true;
+                    parent[v] = u;
+                    q.push(v);
+                }
+            }
+        }
+
+        return -1;
+    }
+};
+
+int main() {
+    Graph g;
+    Node* root = NULL;
+
+    
+    g.addRoad(0, 1);
+    g.addRoad(0, 2);
+    g.addRoad(1, 3);
+    g.addRoad(2, 4);
+    g.addRoad(4, 5);
+
+    
+    root = insert(root, 5, "City EV Charging Station");
+    root = insert(root, 10, "Green EV Charging Station");
+    root = insert(root, 15, "Fast EV Charging Station");
+
+    cout << "EV Charging Station Finder\n";
+
+    cout << "\n0. College\n";
+    cout << "1. Market\n";
+    cout << "2. Bus Stand\n";
+    cout << "3. Hospital\n";
+    cout << "4. Mall\n";
+
+    int start;
+    cout << "\nEnter current location (0-4): ";
+    cin >> start;
+
+    if (start < 0 || start > 4) {
+        cout << "Invalid location!";
+        return 0;
+    }
+
+    int station = g.findStation(start);
+
+    if (station != -1) {
+        cout << "\nCharging Station Found!\n";
+
+        Node* result = search(root, station);
+
+        if (result != NULL) {
+            cout << "Station ID: " << result->id;
+            cout << "\nStation Name: " << result->name;
+        }
+    }
+    else {
+        cout << "\nNo charging station found!";
+    }
+
+    return 0;
+}
