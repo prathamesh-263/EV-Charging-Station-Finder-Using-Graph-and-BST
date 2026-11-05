@@ -1,0 +1,59 @@
+1)
+EV Charging Station Finder
+0. College
+1. Market
+2. Bus Stand
+3. Hospital
+4. Mall
+
+Enter current location (0-4): 0
+Path: College -> Bus Stand -> Mall -> Charging Station
+Charging Station Found!
+Station ID: 5
+Station Name: City EV Charging Station
+
+2)
+EV Charging Station Finder
+0. College
+1. Market
+2. Bus Stand
+3. Hospital
+4. Mall
+
+Enter current location (0-4): 2
+Path: Bus Stand -> Mall -> Charging Station
+Charging Station Found!
+Station ID: 5
+Station Name: City EV Charging Station
+
+3)
+EV Charging Station Finder
+0. College
+1. Market
+2. Bus Stand
+3. Hospital
+4. Mall
+
+Enter current location (0-4): 4
+Path: Mall -> Charging Station
+Charging Station Found!
+Station ID: 5
+Station Name: City EV Charging Station
+
+
+4)
+EV Charging Station Finder
+0. College
+1. Market
+2. Bus Stand
+3. Hospital
+4. Mall
+
+Enter current location (0-4): 3
+Path: Hospital -> Market -> College -> Bus Stand -> Mall -> Charging Station
+Charging Station Found!
+Station ID: 5
+Station Name: City EV Charging Station
+{Note:The Output is Edited to understand easily.}
+
+
